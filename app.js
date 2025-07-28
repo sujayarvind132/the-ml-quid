@@ -413,3 +413,283 @@ if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
     }
   });
 }
+
+// ML QuID - Simplified JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    initializeNavigation();
+    initializeSmoothScrolling();
+    initializeContactForm();
+    initializeMobileMenu();
+    initializeAnimations();
+});
+
+// Navigation functionality
+function initializeNavigation() {
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section[id]');
+
+    // Set active navigation link based on scroll position
+    function setActiveNavLink() {
+        let current = '';
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 100;
+            const sectionHeight = section.clientHeight;
+
+            if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${current}`) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    // Listen for scroll events
+    window.addEventListener('scroll', debounce(setActiveNavLink, 100));
+
+    // Set initial active link
+    setActiveNavLink();
+}
+
+// Smooth scrolling for navigation links
+function initializeSmoothScrolling() {
+    const navLinks = document.querySelectorAll('a[href^="#"]');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            const targetId = this.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(targetId);
+
+            if (targetSection) {
+                const offsetTop = targetSection.offsetTop - 80; // Account for fixed header
+
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+
+                // Close mobile menu if open
+                const mobileMenu = document.querySelector('.nav-menu');
+                if (mobileMenu) {
+                    mobileMenu.classList.remove('mobile-menu-open');
+                }
+            }
+        });
+    });
+}
+
+// Contact form functionality
+function initializeContactForm() {
+    const contactForm = document.querySelector('.contact-form-element');
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                message: document.getElementById('message').value.trim()
+            };
+
+            // Basic validation
+            if (!formData.name || !formData.email || !formData.message) {
+                showNotification('Please fill in all fields.', 'error');
+                return;
+            }
+
+            if (!isValidEmail(formData.email)) {
+                showNotification('Please enter a valid email address.', 'error');
+                return;
+            }
+
+            // Simulate form submission
+            submitContactForm(formData);
+        });
+    }
+}
+
+// Submit contact form (placeholder functionality)
+function submitContactForm(formData) {
+    const submitButton = document.querySelector('.contact-form-element button[type="submit"]');
+    const originalText = submitButton.textContent;
+
+    // Show loading state
+    submitButton.textContent = 'Sending...';
+    submitButton.disabled = true;
+
+    // Simulate API call
+    setTimeout(() => {
+        // Reset form
+        document.querySelector('.contact-form-element').reset();
+
+        // Reset button
+        submitButton.textContent = originalText;
+        submitButton.disabled = false;
+
+        // Show success message
+        showNotification('Thank you for your message! We\'ll get back to you soon.', 'success');
+
+        console.log('Form submitted:', formData);
+    }, 2000);
+}
+
+// Mobile menu functionality
+function initializeMobileMenu() {
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navMenu = document.querySelector('.nav-menu');
+
+    if (mobileMenuBtn && navMenu) {
+        mobileMenuBtn.addEventListener('click', function() {
+            navMenu.classList.toggle('mobile-menu-open');
+            this.classList.toggle('active');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!mobileMenuBtn.contains(e.target) && !navMenu.contains(e.target)) {
+                navMenu.classList.remove('mobile-menu-open');
+                mobileMenuBtn.classList.remove('active');
+            }
+        });
+
+        // Close menu on window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                navMenu.classList.remove('mobile-menu-open');
+                mobileMenuBtn.classList.remove('active');
+            }
+        });
+    }
+}
+
+// Initialize scroll animations
+function initializeAnimations() {
+    const animatedElements = document.querySelectorAll('.service-card, .tech-item');
+
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-fade-in');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    animatedElements.forEach(element => {
+        observer.observe(element);
+    });
+}
+
+// Utility functions
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+function showNotification(message, type = 'info') {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification--${type}`;
+    notification.textContent = message;
+
+    // Add styles
+    Object.assign(notification.style, {
+        position: 'fixed',
+        top: '20px',
+        right: '20px',
+        padding: '16px 24px',
+        borderRadius: '8px',
+        color: 'white',
+        fontSize: '14px',
+        fontWeight: '500',
+        zIndex: '1000',
+        opacity: '0',
+        transform: 'translateY(-20px)',
+        transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+        maxWidth: '400px',
+        boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)'
+    });
+
+    // Set background color based on type
+    const colors = {
+        success: '#21808d',
+        error: '#dc3545',
+        info: '#17a2b8'
+    };
+    notification.style.backgroundColor = colors[type] || colors.info;
+
+    // Add to page
+    document.body.appendChild(notification);
+
+    // Animate in
+    setTimeout(() => {
+        notification.style.opacity = '1';
+        notification.style.transform = 'translateY(0)';
+    }, 10);
+
+    // Remove after delay
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transform = 'translateY(-20px)';
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 300);
+    }, 4000);
+}
+
+// Handle page visibility changes
+document.addEventListener('visibilitychange', function() {
+    if (document.visibilityState === 'visible') {
+        // Page became visible - could refresh data if needed
+        console.log('Page is now visible');
+    }
+});
+
+// Handle errors gracefully
+window.addEventListener('error', function(e) {
+    console.error('JavaScript error:', e.error);
+    // Could send error to logging service in production
+});
+
+// Performance monitoring
+window.addEventListener('load', function() {
+    // Page fully loaded
+    console.log('Page loaded successfully');
+
+    // Add loaded class to body for any CSS animations
+    document.body.classList.add('page-loaded');
+});
+
+// Export functions for testing (if needed)
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        isValidEmail,
+        debounce
+    };
+}

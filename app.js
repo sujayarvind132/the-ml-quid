@@ -1,374 +1,415 @@
-// Sample data for mock search functionality
-const sampleData = {
-  questions: [
+// Application Data
+const appData = {
+  "systemInfo": {
+    "name": "ML QuID",
+    "version": "2.0 Chat",
+    "description": "Active AI Chat System with Advanced Understanding",
+    "features": ["Conversational Interface", "Context Awareness", "Proactive Suggestions", "Real-time Responses"]
+  },
+  "welcomeMessage": {
+    "content": "Hello! I'm ML QuID, your active AI assistant. I'm designed to understand context and provide proactive responses. I can help you explore topics about AI, machine learning, and active response systems. What would you like to know?",
+    "suggestions": [
+      "What makes you different from other AI assistants?",
+      "How do you understand context in conversations?",
+      "Tell me about proactive AI systems",
+      "What are your key capabilities?"
+    ]
+  },
+  "knowledgeBase": [
     {
-      query: "What is artificial intelligence?",
-      answer: "Artificial Intelligence (AI) refers to computer systems that can perform tasks typically requiring human intelligence, such as learning, reasoning, problem-solving, and decision-making. AI includes machine learning, neural networks, and deep learning algorithms that analyze data patterns."
+      "category": "About ML QuID",
+      "topics": [
+        {
+          "keywords": ["different", "unique", "special", "capabilities"],
+          "answer": "I'm designed to be proactive rather than just reactive. While traditional AI assistants wait for specific commands, I continuously analyze our conversation context, anticipate your needs, and provide relevant suggestions before you even ask. I maintain conversation memory and adapt my responses based on your interests and previous interactions.",
+          "confidence": 0.94,
+          "followUp": ["How does proactive AI work?", "What is context awareness?", "Show me an example of proactive behavior"]
+        },
+        {
+          "keywords": ["context", "understanding", "conversation", "memory"],
+          "answer": "I understand context by maintaining a memory of our entire conversation, analyzing the relationships between topics we discuss, and recognizing patterns in your questions. This allows me to provide more relevant responses and anticipate what information might be helpful next, rather than treating each question in isolation.",
+          "confidence": 0.91,
+          "followUp": ["How do you maintain conversation memory?", "What are the benefits of context awareness?", "Can you give me a practical example?"]
+        }
+      ]
     },
     {
-      query: "How does climate change work?",
-      answer: "Climate change occurs when greenhouse gases trap heat in Earth's atmosphere, causing global temperatures to rise. Human activities like burning fossil fuels increase carbon dioxide levels, leading to melting ice caps, rising sea levels, and extreme weather patterns."
+      "category": "Proactive AI Systems", 
+      "topics": [
+        {
+          "keywords": ["proactive", "active", "anticipate", "predict"],
+          "answer": "Proactive AI systems are designed to take initiative by analyzing patterns, predicting user needs, and providing value before being asked. Unlike reactive systems that only respond to direct commands, proactive AI continuously processes information, learns from interactions, and suggests relevant actions or information. This creates a more intuitive and helpful user experience.",
+          "confidence": 0.96,
+          "followUp": ["How is this different from reactive AI?", "What are the benefits of proactive systems?", "Give me examples of proactive AI in action"]
+        }
+      ]
     },
     {
-      query: "What is cryptocurrency?",
-      answer: "Cryptocurrency is digital currency secured by cryptography and built on blockchain technology. Unlike traditional currencies, it's decentralized, meaning no central authority controls it. Bitcoin, Ethereum, and other cryptocurrencies enable peer-to-peer transactions without banks or intermediaries."
-    },
-    {
-      query: "How do vaccines work?",
-      answer: "Vaccines train your immune system to recognize and fight specific diseases by introducing weakened or inactive pathogens. This creates antibodies and immune memory, so if exposed to the actual disease, your body can quickly respond and prevent illness."
-    },
-    {
-      query: "What is machine learning?",
-      answer: "Machine learning is a subset of AI where algorithms learn patterns from data without explicit programming. Systems improve performance through experience, making predictions or decisions. Types include supervised, unsupervised, and reinforcement learning, powering applications like recommendation systems and image recognition."
-    },
-    {
-      query: "How does the internet work?",
-      answer: "The internet is a global network of interconnected computers communicating through standardized protocols like TCP/IP. Data travels through routers, switches, and cables, allowing devices worldwide to share information. Internet Service Providers connect users to this vast network infrastructure."
-    },
-    {
-      query: "What is quantum computing?",
-      answer: "Quantum computing uses quantum mechanical phenomena like superposition and entanglement to process information. Unlike classical bits, quantum bits (qubits) can exist in multiple states simultaneously, potentially solving complex problems exponentially faster than traditional computers for specific applications."
-    },
-    {
-      query: "How does photosynthesis work?",
-      answer: "Photosynthesis is the process where plants convert sunlight, carbon dioxide, and water into glucose and oxygen. Chlorophyll in plant cells captures light energy, driving chemical reactions that produce food for the plant while releasing oxygen as a byproduct."
-    },
-    {
-      query: "What is blockchain technology?",
-      answer: "Blockchain is a distributed ledger technology that maintains a continuously growing list of records (blocks) linked and secured using cryptography. Each block contains transaction data, timestamps, and cryptographic hashes, creating an immutable, transparent, and decentralized record-keeping system."
-    },
-    {
-      query: "How do neural networks work?",
-      answer: "Neural networks are computing systems inspired by biological neural networks. They consist of interconnected nodes (neurons) that process and transmit information through weighted connections. Through training, these networks learn to recognize patterns, make predictions, and solve complex problems."
+      "category": "Technical Capabilities",
+      "topics": [
+        {
+          "keywords": ["how", "work", "technology", "implementation"],
+          "answer": "I use advanced natural language processing to understand your questions, context memory to maintain conversation history, pattern recognition to identify your interests, and predictive algorithms to generate relevant suggestions. My responses are generated in real-time with confidence scoring to ensure accuracy.",
+          "confidence": 0.88,
+          "followUp": ["Tell me more about your NLP capabilities", "How do you score confidence?", "What is pattern recognition in AI?"]
+        }
+      ]
     }
   ],
-  fallbackAnswers: [
-    "This is a complex topic that involves multiple interconnected factors and systems. Current research and expert analysis suggest various approaches and solutions are being developed and implemented worldwide to address the challenges and opportunities in this field.",
-    "Based on current scientific understanding and research, this subject encompasses various theories, methodologies, and practical applications. Experts continue to study and develop new insights, with ongoing debates and discoveries shaping our knowledge in this area.",
-    "This topic represents an important area of study and development with significant implications for society, technology, and human progress. Multiple perspectives and approaches exist, with continued research and innovation driving new understanding and practical solutions.",
-    "Current evidence and expert analysis indicate this is a multifaceted subject with various contributing factors and potential outcomes. Ongoing research and technological advances continue to expand our understanding and provide new insights into effective approaches.",
-    "This subject involves complex systems and processes that researchers and practitioners continue to study and refine. Multiple factors contribute to the outcomes, and evolving methodologies and technologies are helping to advance our knowledge and capabilities."
+  "conversationStarters": [
+    "What makes AI systems 'active' vs 'passive'?",
+    "How do you process and understand natural language?",
+    "Explain your learning and adaptation process",
+    "What is the future of proactive AI?",
+    "How do you maintain context across conversations?",
+    "Show me examples of your proactive capabilities"
   ]
 };
 
 // DOM Elements
-const searchForm = document.getElementById('searchForm');
-const searchInput = document.getElementById('searchInput');
-const searchBtn = document.getElementById('searchBtn');
-const loadingSpinner = document.getElementById('loadingSpinner');
-const resultsSection = document.getElementById('resultsSection');
-const resultCard = document.getElementById('resultCard');
-const resultQuestion = document.getElementById('resultQuestion');
-const resultAnswer = document.getElementById('resultAnswer');
-const wordCount = document.getElementById('wordCount');
-const copyBtn = document.getElementById('copyBtn');
-const errorMessage = document.getElementById('errorMessage');
-const historyList = document.getElementById('historyList');
-const clearHistoryBtn = document.getElementById('clearHistoryBtn');
-const instructionsToggle = document.getElementById('instructionsToggle');
-const instructionsContent = document.getElementById('instructionsContent');
-const toast = document.getElementById('toast');
-const toastMessage = document.getElementById('toastMessage');
+const messagesContainer = document.getElementById('messagesContainer');
+const messageInput = document.getElementById('messageInput');
+const sendButton = document.getElementById('sendButton');
+const suggestionsContainer = document.getElementById('suggestionsContainer');
+const typingIndicator = document.getElementById('typingIndicator');
 
 // Application State
-let searchHistory = [];
+let conversationContext = [];
+let currentSuggestions = [];
+let isProcessing = false;
 
 // Initialize Application
 document.addEventListener('DOMContentLoaded', function() {
-  loadSearchHistory();
+  initializeChat();
   setupEventListeners();
-  displaySearchHistory();
 });
 
-// Event Listeners
+// Setup Event Listeners
 function setupEventListeners() {
-  // Search form submission
-  searchForm.addEventListener('submit', handleSearch);
+  // Message input events
+  messageInput.addEventListener('input', handleInputChange);
+  messageInput.addEventListener('keydown', handleKeyDown);
   
-  // Copy button
-  copyBtn.addEventListener('copy-button', copyToClipboard);
+  // Send button
+  sendButton.addEventListener('click', handleSendMessage);
   
-  // Clear history button
-  clearHistoryBtn.addEventListener('click', clearSearchHistory);
-  
-  // Instructions toggle
-  instructionsToggle.addEventListener('click', toggleInstructions);
-  
-  // Enter key support for search
-  searchInput.addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      handleSearch(e);
-    }
-  });
-  
-  // Copy button click
-  copyBtn.addEventListener('click', copyToClipboard);
+  // Auto-resize textarea
+  messageInput.addEventListener('input', autoResizeTextarea);
 }
 
-// Search Handler
-async function handleSearch(e) {
-  e.preventDefault();
+// Initialize Chat
+function initializeChat() {
+  displayWelcomeMessage();
+  updateSuggestions(appData.welcomeMessage.suggestions);
   
-  const query = searchInput.value.trim();
-  if (!query) {
-    showError('Please enter a question to search.');
-    return;
-  }
-  
-  setLoadingState(true);
-  hideError();
-  
-  try {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000));
-    
-    const result = await mockSearch(query);
-    displayResult(query, result);
-    addToHistory(query, result);
-    displaySearchHistory();
-    
-  } catch (error) {
-    showError('Sorry, something went wrong. Please try again.');
-    console.error('Search error:', error);
-  } finally {
-    setLoadingState(false);
-  }
-}
-
-// Mock Search Function
-async function mockSearch(query) {
-  // Try to find exact or similar match
-  const normalizedQuery = query.toLowerCase();
-  
-  // Check for exact matches first
-  const exactMatch = sampleData.questions.find(item => 
-    item.query.toLowerCase() === normalizedQuery
-  );
-  
-  if (exactMatch) {
-    return exactMatch.answer;
-  }
-  
-  // Check for partial matches
-  const partialMatch = sampleData.questions.find(item => {
-    const queryWords = normalizedQuery.split(' ');
-    const itemWords = item.query.toLowerCase().split(' ');
-    
-    return queryWords.some(word => 
-      itemWords.some(itemWord => 
-        itemWord.includes(word) || word.includes(itemWord)
-      )
-    );
-  });
-  
-  if (partialMatch) {
-    return partialMatch.answer;
-  }
-  
-  // Use fallback answer
-  const randomIndex = Math.floor(Math.random() * sampleData.fallbackAnswers.length);
-  return sampleData.fallbackAnswers[randomIndex];
-}
-
-// Display Result
-function displayResult(query, answer) {
-  resultQuestion.textContent = query;
-  resultAnswer.textContent = answer;
-  
-  const words = countWords(answer);
-  wordCount.textContent = `${words} word${words !== 1 ? 's' : ''}`;
-  
-  // Show result card
-  resultCard.classList.remove('hidden');
-  hideError();
-  
-  // Scroll to results
-  resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-// Word Counter
-function countWords(text) {
-  return text.trim().split(/\s+/).filter(word => word.length > 0).length;
-}
-
-// Loading State Management
-function setLoadingState(isLoading) {
-  if (isLoading) {
-    searchBtn.classList.add('loading');
-    searchBtn.disabled = true;
-    loadingSpinner.classList.remove('hidden');
-  } else {
-    searchBtn.classList.remove('loading');
-    searchBtn.disabled = false;
-    loadingSpinner.classList.add('hidden');
-  }
-}
-
-// Error Handling
-function showError(message) {
-  errorMessage.querySelector('span').textContent = message;
-  errorMessage.classList.remove('hidden');
-  resultCard.classList.add('hidden');
-}
-
-function hideError() {
-  errorMessage.classList.add('hidden');
-}
-
-// Copy to Clipboard
-async function copyToClipboard() {
-  try {
-    const text = resultAnswer.textContent;
-    await navigator.clipboard.writeText(text);
-    showToast('Answer copied to clipboard!');
-  } catch (error) {
-    // Fallback for older browsers
-    const textArea = document.createElement('textarea');
-    textArea.value = resultAnswer.textContent;
-    document.body.appendChild(textArea);
-    textArea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textArea);
-    showToast('Answer copied to clipboard!');
-  }
-}
-
-// Toast Notifications
-function showToast(message) {
-  toastMessage.textContent = message;
-  toast.classList.remove('hidden');
-  toast.classList.add('show');
-  
+  // Focus on input after initialization
   setTimeout(() => {
-    toast.classList.remove('show');
-    setTimeout(() => {
-      toast.classList.add('hidden');
-    }, 300);
-  }, 3000);
+    messageInput.focus();
+  }, 500);
 }
 
-// Search History Management
-function addToHistory(query, answer) {
-  const historyItem = {
-    query,
-    answer,
-    timestamp: Date.now()
-  };
-  
-  // Remove duplicates
-  searchHistory = searchHistory.filter(item => 
-    item.query.toLowerCase() !== query.toLowerCase()
-  );
-  
-  // Add to beginning
-  searchHistory.unshift(historyItem);
-  
-  // Keep only last 5 searches
-  searchHistory = searchHistory.slice(0, 5);
-  
-  // Save to localStorage (note: this is just for demo, localStorage may not work in all deployment scenarios)
-  try {
-    localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
-  } catch (error) {
-    // Ignore localStorage errors in sandbox environments
-    console.log('LocalStorage not available');
-  }
-}
-
-function loadSearchHistory() {
-  try {
-    const saved = localStorage.getItem('searchHistory');
-    if (saved) {
-      searchHistory = JSON.parse(saved);
-    }
-  } catch (error) {
-    // Ignore localStorage errors in sandbox environments
-    searchHistory = [];
-  }
-}
-
-function displaySearchHistory() {
-  if (searchHistory.length === 0) {
-    historyList.innerHTML = '<p class="history-empty">No searches yet. Start by asking a question above!</p>';
-    return;
-  }
-  
-  historyList.innerHTML = searchHistory.map(item => `
-    <div class="history-item" onclick="selectHistoryItem('${item.query.replace(/'/g, "\\'")}')">
-      <div class="history-question">${escapeHtml(item.query)}</div>
-      <div class="history-answer">${escapeHtml(item.answer)}</div>
+// Display Welcome Message
+function displayWelcomeMessage() {
+  const welcomeElement = document.createElement('div');
+  welcomeElement.className = 'welcome-message';
+  welcomeElement.innerHTML = `
+    <h2>Welcome to ${appData.systemInfo.name}</h2>
+    <p>${appData.welcomeMessage.content}</p>
+    <div class="welcome-features">
+      ${appData.systemInfo.features.map(feature => `<span class="feature-tag">${feature}</span>`).join('')}
     </div>
-  `).join('');
+  `;
+  
+  messagesContainer.appendChild(welcomeElement);
+  scrollToBottom();
 }
 
-function selectHistoryItem(query) {
-  searchInput.value = query;
-  searchInput.focus();
-  
-  // Find the answer from history
-  const historyItem = searchHistory.find(item => item.query === query);
-  if (historyItem) {
-    displayResult(query, historyItem.answer);
+// Handle Input Change
+function handleInputChange() {
+  const hasContent = messageInput.value.trim().length > 0;
+  sendButton.disabled = !hasContent || isProcessing;
+}
+
+// Handle Key Down
+function handleKeyDown(e) {
+  if (e.key === 'Enter') {
+    if (e.shiftKey) {
+      // Allow new line with Shift+Enter
+      return;
+    } else {
+      e.preventDefault();
+      if (!isProcessing && messageInput.value.trim()) {
+        handleSendMessage();
+      }
+    }
   }
 }
 
-function clearSearchHistory() {
-  searchHistory = [];
+// Auto Resize Textarea
+function autoResizeTextarea() {
+  messageInput.style.height = 'auto';
+  messageInput.style.height = Math.min(messageInput.scrollHeight, 120) + 'px';
+}
+
+// Handle Send Message
+async function handleSendMessage() {
+  const message = messageInput.value.trim();
+  if (!message || isProcessing) return;
+  
+  isProcessing = true;
+  
+  // Clear input and disable send button
+  messageInput.value = '';
+  sendButton.disabled = true;
+  autoResizeTextarea();
+  
+  // Add user message to conversation
+  addMessage('user', message);
+  conversationContext.push({ role: 'user', content: message });
+  
+  // Show typing indicator
+  showTypingIndicator();
+  
+  // Generate AI response
   try {
-    localStorage.removeItem('searchHistory');
+    const response = await generateAIResponse(message);
+    hideTypingIndicator();
+    
+    // Add AI response
+    addMessage('ai', response.answer, response.confidence);
+    conversationContext.push({ role: 'ai', content: response.answer });
+    
+    // Update suggestions based on response
+    updateSuggestions(response.followUp || generateContextualSuggestions());
+    
   } catch (error) {
-    // Ignore localStorage errors
+    console.error('Error generating response:', error);
+    hideTypingIndicator();
+    addMessage('ai', "I apologize, but I'm experiencing some technical difficulties. Please try asking your question again.", 0.5);
+    updateSuggestions(["Try asking again", "Ask a different question", "What can you help me with?"]);
+  } finally {
+    isProcessing = false;
+    handleInputChange(); // Re-enable send button if there's content
   }
-  displaySearchHistory();
-  showToast('Search history cleared!');
 }
 
-// Instructions Toggle
-function toggleInstructions() {
-  const isActive = instructionsToggle.classList.contains('active');
+// Add Message to Chat
+function addMessage(role, content, confidence = null) {
+  const messageElement = document.createElement('div');
+  messageElement.className = `message ${role}`;
   
-  if (isActive) {
-    instructionsToggle.classList.remove('active');
-    instructionsContent.classList.add('hidden');
-  } else {
-    instructionsToggle.classList.add('active');
-    instructionsContent.classList.remove('hidden');
+  const avatar = role === 'ai' ? 'ML' : 'You';
+  const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  
+  let confidenceHtml = '';
+  if (confidence !== null && role === 'ai') {
+    const confidenceClass = confidence >= 0.9 ? 'confidence-high' : 
+                           confidence >= 0.7 ? 'confidence-medium' : 'confidence-low';
+    const confidencePercent = Math.round(confidence * 100);
+    confidenceHtml = `
+      <div class="message-meta">
+        <span class="timestamp">${timestamp}</span>
+        <span class="confidence-score ${confidenceClass}">Confidence: ${confidencePercent}%</span>
+      </div>
+    `;
+  } else if (role === 'user') {
+    confidenceHtml = `
+      <div class="message-meta">
+        <span class="timestamp">${timestamp}</span>
+      </div>
+    `;
   }
+  
+  messageElement.innerHTML = `
+    <div class="message-avatar">${avatar}</div>
+    <div class="message-content">
+      <div class="message-bubble">${escapeHtml(content)}</div>
+      ${confidenceHtml}
+    </div>
+  `;
+  
+  messagesContainer.appendChild(messageElement);
+  scrollToBottom();
 }
 
-// Utility Functions
+// Escape HTML to prevent XSS
 function escapeHtml(text) {
   const div = document.createElement('div');
   div.textContent = text;
   return div.innerHTML;
 }
 
-// Keyboard Shortcuts
-document.addEventListener('keydown', function(e) {
-  // Focus search input with Ctrl/Cmd + K
-  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-    e.preventDefault();
-    searchInput.focus();
-  }
+// Generate AI Response
+async function generateAIResponse(userMessage) {
+  // Simulate processing delay
+  await new Promise(resolve => setTimeout(resolve, 1500 + Math.random() * 1500));
   
-  // Copy answer with Ctrl/Cmd + C when result is visible
-  if ((e.ctrlKey || e.metaKey) && e.key === 'c' && !resultCard.classList.contains('hidden')) {
-    if (document.activeElement !== searchInput) {
-      e.preventDefault();
-      copyToClipboard();
+  const normalizedMessage = userMessage.toLowerCase();
+  
+  // Find matching response from knowledge base
+  for (const category of appData.knowledgeBase) {
+    for (const topic of category.topics) {
+      const hasKeyword = topic.keywords.some(keyword => 
+        normalizedMessage.includes(keyword.toLowerCase())
+      );
+      
+      if (hasKeyword) {
+        return {
+          answer: topic.answer,
+          confidence: topic.confidence,
+          followUp: topic.followUp
+        };
+      }
     }
   }
+  
+  // Generate contextual response based on conversation
+  return generateContextualResponse(userMessage);
+}
+
+// Generate Contextual Response
+function generateContextualResponse(userMessage) {
+  const contextualResponses = [
+    {
+      answer: "That's an interesting question! Based on our conversation, I can see you're curious about AI systems and their capabilities. Let me explain how I approach this topic by analyzing the context of what we've discussed and providing insights that build on our previous exchanges.",
+      confidence: 0.85,
+      followUp: ["Can you elaborate on that topic?", "How does this relate to what we discussed?", "Tell me more about the technical aspects"]
+    },
+    {
+      answer: "I notice you're exploring topics related to AI and machine learning. This connects well with my proactive capabilities - I'm designed to not just answer questions, but to understand the deeper context of what you're trying to learn and suggest related areas that might interest you.",
+      confidence: 0.87,
+      followUp: ["What other related topics should I explore?", "How do you determine what's relevant?", "Show me more examples"]
+    },
+    {
+      answer: "Great question! This touches on one of my core strengths - context awareness. I maintain a memory of our entire conversation and use that to provide more nuanced, relevant responses. Unlike traditional AI that treats each question in isolation, I consider how this fits into the broader discussion we're having.",
+      confidence: 0.92,
+      followUp: ["How is this different from other AI systems?", "Can you give me a practical example?", "What are the benefits of context awareness?"]
+    }
+  ];
+  
+  const randomResponse = contextualResponses[Math.floor(Math.random() * contextualResponses.length)];
+  return randomResponse;
+}
+
+// Generate Contextual Suggestions
+function generateContextualSuggestions() {
+  const recentTopics = conversationContext.slice(-4).map(msg => msg.content.toLowerCase());
+  const hasAITopic = recentTopics.some(topic => topic.includes('ai') || topic.includes('artificial'));
+  const hasContextTopic = recentTopics.some(topic => topic.includes('context') || topic.includes('memory'));
+  const hasProactiveTopic = recentTopics.some(topic => topic.includes('proactive') || topic.includes('active'));
+  
+  let suggestions = [];
+  
+  if (hasAITopic) {
+    suggestions.push("How do you learn from our conversations?", "What makes AI truly intelligent?");
+  }
+  
+  if (hasContextTopic) {
+    suggestions.push("Show me how context awareness works", "Can you remember everything we've discussed?");
+  }
+  
+  if (hasProactiveTopic) {
+    suggestions.push("Give me an example of proactive behavior", "How do you anticipate user needs?");
+  }
+  
+  // Add some general suggestions
+  suggestions.push(...appData.conversationStarters.slice(0, 2));
+  
+  // Return up to 4 unique suggestions
+  return [...new Set(suggestions)].slice(0, 4);
+}
+
+// Update Suggestions
+function updateSuggestions(suggestions) {
+  currentSuggestions = suggestions;
+  suggestionsContainer.innerHTML = '';
+  
+  suggestions.forEach(suggestion => {
+    const suggestionElement = document.createElement('button');
+    suggestionElement.className = 'suggestion-pill';
+    suggestionElement.textContent = suggestion;
+    suggestionElement.addEventListener('click', (e) => {
+      e.preventDefault();
+      selectSuggestion(suggestion);
+    });
+    suggestionsContainer.appendChild(suggestionElement);
+  });
+}
+
+// Select Suggestion
+function selectSuggestion(suggestion) {
+  if (isProcessing) return;
+  
+  messageInput.value = suggestion;
+  messageInput.focus();
+  handleInputChange();
+  autoResizeTextarea();
+  
+  // Optional: Auto-send the suggestion after a brief delay
+  setTimeout(() => {
+    if (messageInput.value === suggestion) {
+      handleSendMessage();
+    }
+  }, 300);
+}
+
+// Show Typing Indicator
+function showTypingIndicator() {
+  typingIndicator.classList.remove('hidden');
+  scrollToBottom();
+}
+
+// Hide Typing Indicator
+function hideTypingIndicator() {
+  typingIndicator.classList.add('hidden');
+}
+
+// Scroll to Bottom
+function scrollToBottom() {
+  setTimeout(() => {
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }, 100);
+}
+
+// Handle browser back/forward
+window.addEventListener('popstate', function() {
+  // Maintain state if needed
 });
 
-// Add some sample searches for demonstration
-setTimeout(() => {
-  if (searchHistory.length === 0) {
-    // Add a sample search to show functionality
-    addToHistory(
-      "What is artificial intelligence?",
-      "Artificial Intelligence (AI) refers to computer systems that can perform tasks typically requiring human intelligence, such as learning, reasoning, problem-solving, and decision-making. AI includes machine learning, neural networks, and deep learning algorithms that analyze data patterns."
-    );
-    displaySearchHistory();
-  }
-}, 500);
+// Accessibility improvements
+messageInput.addEventListener('focus', function() {
+  this.setAttribute('aria-expanded', 'true');
+});
+
+messageInput.addEventListener('blur', function() {
+  this.setAttribute('aria-expanded', 'false');
+});
+
+// Handle mobile viewport
+function handleMobileViewport() {
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+
+window.addEventListener('resize', handleMobileViewport);
+window.addEventListener('orientationchange', handleMobileViewport);
+handleMobileViewport();
+
+// Prevent zoom on iOS when focusing input
+if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+  messageInput.addEventListener('focus', function() {
+    const viewport = document.querySelector('meta[name=viewport]');
+    if (viewport) {
+      viewport.setAttribute('content', 
+        'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+    }
+  });
+  
+  messageInput.addEventListener('blur', function() {
+    const viewport = document.querySelector('meta[name=viewport]');
+    if (viewport) {
+      viewport.setAttribute('content', 
+        'width=device-width, initial-scale=1.0');
+    }
+  });
+}

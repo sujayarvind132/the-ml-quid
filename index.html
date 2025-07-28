@@ -3,124 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Search Assistant - 50 Word Answers</title>
+    <title>ML QuID - Active AI Chat System</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
+    <div class="chat-container">
         <!-- Header -->
-        <header class="header">
-            <h1>AI Search Assistant</h1>
-            <p class="subtitle">Get concise answers to any question in 50 words or less</p>
+        <header class="chat-header">
+            <div class="header-content">
+                <div class="brand-section">
+                    <h1 class="brand-title">ML QuID</h1>
+                    <span class="version-badge">2.0 Chat</span>
+                </div>
+                <div class="system-status">
+                    <div class="status-indicator">
+                        <div class="status-dot active"></div>
+                        <span class="status-text">Active</span>
+                    </div>
+                    <div class="system-metrics">
+                        <span class="metric">Response: &lt;100ms</span>
+                        <span class="metric">Accuracy: 94.2%</span>
+                    </div>
+                </div>
+            </div>
         </header>
 
-        <!-- Search Section -->
-        <section class="search-section">
-            <form class="search-form" id="searchForm">
-                <div class="search-input-container">
-                    <input 
-                        type="text" 
-                        id="searchInput" 
-                        class="form-control search-input" 
-                        placeholder="Ask any question... (e.g., What is artificial intelligence?)"
-                        required
-                    >
-                    <button type="submit" class="btn btn--primary search-btn" id="searchBtn">
-                        <span class="search-btn-text">Search</span>
-                        <div class="loading-spinner hidden" id="loadingSpinner"></div>
+        <!-- Main Chat Area -->
+        <main class="chat-main">
+            <div class="messages-container" id="messagesContainer">
+                <!-- Welcome message will be inserted here -->
+            </div>
+        </main>
+
+        <!-- Input Area -->
+        <footer class="chat-footer">
+            <!-- Suggestions Area -->
+            <div class="suggestions-area" id="suggestionsArea">
+                <div class="suggestions-container" id="suggestionsContainer">
+                    <!-- Active suggestions will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Input Container -->
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <textarea 
+                        id="messageInput" 
+                        class="message-input" 
+                        placeholder="Ask me anything about AI, machine learning, or active systems..."
+                        rows="1"
+                    ></textarea>
+                    <button id="sendButton" class="send-button" disabled>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="m22 2-7 20-4-9-9-4 20-7z"/>
+                        </svg>
                     </button>
                 </div>
-            </form>
-        </section>
-
-        <!-- Results Section -->
-        <section class="results-section" id="resultsSection">
-            <div class="result-card hidden" id="resultCard">
-                <div class="result-header">
-                    <h3 class="result-question" id="resultQuestion"></h3>
-                    <div class="result-actions">
-                        <span class="word-count" id="wordCount">0 words</span>
-                        <button class="btn btn--outline btn--sm copy-btn" id="copyBtn">Copy</button>
-                    </div>
-                </div>
-                <div class="result-body">
-                    <p class="result-answer" id="resultAnswer"></p>
-                </div>
             </div>
-
-            <!-- Error Message -->
-            <div class="error-message hidden" id="errorMessage">
-                <div class="status status--error">
-                    <span>Sorry, something went wrong. Please try again.</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- Search History -->
-        <section class="history-section">
-            <div class="history-header">
-                <h3>Recent Searches</h3>
-                <button class="btn btn--outline btn--sm" id="clearHistoryBtn">Clear History</button>
-            </div>
-            <div class="history-list" id="historyList">
-                <p class="history-empty">No searches yet. Start by asking a question above!</p>
-            </div>
-        </section>
-
-        <!-- GitHub Deployment Instructions -->
-        <section class="instructions-section">
-            <div class="instructions-toggle" id="instructionsToggle">
-                <h3>🚀 Deploy to GitHub Pages</h3>
-                <span class="toggle-icon">▼</span>
-            </div>
-            <div class="instructions-content hidden" id="instructionsContent">
-                <div class="card">
-                    <div class="card__body">
-                        <h4>Quick Setup Guide</h4>
-                        <ol class="instructions-list">
-                            <li>
-                                <strong>Create a new repository</strong> on GitHub with any name (e.g., "ai-search-assistant")
-                            </li>
-                            <li>
-                                <strong>Upload these files</strong> to your repository:
-                                <ul>
-                                    <li><code>index.html</code></li>
-                                    <li><code>style.css</code></li>
-                                    <li><code>app.js</code></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <strong>Enable GitHub Pages</strong>:
-                                <ul>
-                                    <li>Go to repository Settings</li>
-                                    <li>Scroll to "Pages" section</li>
-                                    <li>Select "Deploy from a branch"</li>
-                                    <li>Choose "main" branch and "/ (root)" folder</li>
-                                    <li>Click "Save"</li>
-                                </ul>
-                            </li>
-                            <li>
-                                <strong>Access your site</strong> at: <code>https://yourusername.github.io/repository-name</code>
-                            </li>
-                        </ol>
-                        <div class="instructions-note">
-                            <p><strong>Note:</strong> This app uses mock data for demonstration. In a production environment, you would integrate with real search APIs and AI services.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p>Built with HTML, CSS, and JavaScript • Ready for GitHub Pages</p>
         </footer>
-    </div>
 
-    <!-- Success Toast -->
-    <div class="toast hidden" id="toast">
-        <div class="toast-content">
-            <span class="toast-message" id="toastMessage"></span>
+        <!-- Typing Indicator -->
+        <div class="typing-indicator hidden" id="typingIndicator">
+            <div class="typing-content">
+                <div class="typing-avatar">
+                    <div class="avatar-circle">ML</div>
+                </div>
+                <div class="typing-bubble">
+                    <div class="typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

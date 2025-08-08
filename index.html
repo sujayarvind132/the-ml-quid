@@ -41,6 +41,8 @@
                         Quantifying Intelligence & Driving Innovation with 
                         <span class="highlight">Machine Learning</span>
                     </h1>
+                    <!-- Chat Button Added Here -->
+                    <button id="open-chat-btn" class="chat-btn">Chat about Quid – 1</button>
                     <p class="hero-description">
                         Welcome to <strong>ML QuID</strong>, where we bring cutting-edge AI/ML solutions to real-world problems. 
                         From intelligent automation to predictive analytics, we specialize in building robust, scalable, 
@@ -242,6 +244,26 @@
             </div>
         </div>
     </footer>
+
+    <!-- Chat Panel (hidden by default) -->
+    <div id="chat-panel" class="chat-panel hidden">
+      <div class="chat-header">
+        <span>ML Quid Assistant</span>
+        <button id="close-chat-btn" class="close-btn" aria-label="Close">×</button>
+      </div>
+      <div id="chat-messages" class="chat-messages" aria-live="polite"></div>
+      <form id="chat-form" class="chat-input-row">
+        <input
+          id="chat-input"
+          type="text"
+          placeholder="Ask anything about Quid – 1..."
+          autocomplete="off"
+          aria-label="Message input"
+          required
+        />
+        <button id="send-btn" type="submit" class="send-btn">Send</button>
+      </form>
+    </div>
 
     <script src="app.js"></script>
 </body>
